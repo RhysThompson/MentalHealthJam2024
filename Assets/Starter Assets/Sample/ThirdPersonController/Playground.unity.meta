@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 64dce48905ffd9b4293e595fa6941544
-PrefabImporter:
+guid: e9017d5f96b9f09489b4b37e1d6eb914
+DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
@@ -10,5 +10,5 @@ AssetOrigin:
   productId: 267961
   packageName: 'Starter Assets: Character Controllers | URP'
   packageVersion: 1.0.1
-  assetPath: Assets/Prefabs/PlayerArmature.prefab
+  assetPath: Assets/Scenes/Playground.unity
   uploadId: 653737
