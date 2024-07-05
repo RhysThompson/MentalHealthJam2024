@@ -9,7 +9,7 @@ public class Quest : Objective
 {
     public List<Task> TaskData = new List<Task>();
     public List<Task> ActiveTasks { get; private set; } = new List<Task>();
-    public List<Task> CompleteTasks /*{ get; private set; }*/ = new List<Task>();
+    public List<Task> CompleteTasks = new List<Task>();
 
     public void StartTask(Task task)
     {
@@ -18,8 +18,10 @@ public class Quest : Objective
             Debug.Log("Attempted to start an active or complete task");
             return;
         }
+        
         task.OnStart?.Invoke();
         ActiveTasks.Add(task);
+        QuestHUD.Instance.UpdateQuestHUD();
     }
 
     public void CompleteTask(Task task)
@@ -34,10 +36,12 @@ public class Quest : Objective
             Debug.Log("Attempted to complete a task that was not active: " + task.name);
             return;
         }
+        
         task.OnComplete?.Invoke();
         ActiveTasks.Remove(task);
         CompleteTasks.Add(task);
         CheckComplete();
+        QuestHUD.Instance.UpdateQuestHUD();
     }
     public void CheckComplete()
     {
@@ -45,5 +49,6 @@ public class Quest : Objective
         {
             QuestTracker.Instance.CompleteQuest(this);
         }
+        QuestHUD.Instance.UpdateQuestHUD();
     }
 }

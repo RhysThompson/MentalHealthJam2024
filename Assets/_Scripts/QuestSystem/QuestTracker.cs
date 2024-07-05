@@ -13,7 +13,6 @@ public class QuestTracker : Singleton<QuestTracker>
     public List<Quest> QuestData { get; private set; } = new List<Quest>();
     public List<Quest> ActiveQuests { get; private set; } = new List<Quest>();
     public List<Quest> CompleteQuests { get; private set; } = new List<Quest>();
-
     public void Start()
     {
         if (!ValidateIDs())
@@ -41,6 +40,7 @@ public class QuestTracker : Singleton<QuestTracker>
         }
         quest.OnStart?.Invoke();
         ActiveQuests.Add(quest);
+        QuestHUD.Instance.UpdateQuestHUD();
     }
     
     public void CompleteQuest(Quest quest)
@@ -55,10 +55,12 @@ public class QuestTracker : Singleton<QuestTracker>
             print("Attempted to complete a quest that was not active");
             return;
         }
+        
         quest.OnComplete?.Invoke();
         ActiveQuests.Remove(quest);
         CompleteQuests.Add(quest);
         print("Completed Quest: " + quest.name);
+        QuestHUD.Instance.UpdateQuestHUD();
     }
 
     public void CompleteTask(Task task)
