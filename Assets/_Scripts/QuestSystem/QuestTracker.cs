@@ -20,11 +20,7 @@ public class QuestTracker : Singleton<QuestTracker>
             Debug.LogError("Quest IDs are not unique. Please fix this in the quest Tracker by changing the ID's of non-unique quests");
         }
         QuestData = Resources.LoadAll<Quest>("Quests/").ToList();
-        Task[] tasks = Resources.LoadAll<Task>("Quests/");
-        foreach (Task task in tasks)
-        {
-            task.Start();
-        }
+        QuestData.ForEach(x => x.Start());
     }
     public bool ValidateIDs()
     {

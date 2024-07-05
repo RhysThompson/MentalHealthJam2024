@@ -37,3 +37,4 @@ MonoBehaviour:
         m_CallState: 2
   TaskData:
   - {fileID: 11400000, guid: ed6e2d2849ece5c418ae97d9ea05bf83, type: 2}
+  CompleteTasks: []

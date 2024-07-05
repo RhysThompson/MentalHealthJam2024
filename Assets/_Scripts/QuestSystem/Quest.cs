@@ -51,4 +51,11 @@ public class Quest : Objective
         }
         QuestHUD.Instance.UpdateQuestHUD();
     }
+
+    public void Start()
+    {
+        TaskData.ForEach(x => x.Start());
+        ActiveTasks.Clear();
+        CompleteTasks.Clear();
+    }
 }
