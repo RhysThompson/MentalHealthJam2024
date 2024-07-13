@@ -1,37 +1,65 @@
+using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
-
+using System.Collections.Generic;
+[System.Serializable]
+///<summary>
+///This class is used to create a QuestItem object that can be used to trigger events when a quest or task makes progress.
+///If the Object starts disabled, it will not subscribe to the QuestTracker, and the set events will not trigger.
+///</summary> 
 public class QuestItem : MonoBehaviour
 {
-    public bool overlappingPlayer = false;
-    public UnityEvent OnInteract;
-    public KeyCode interactButton = KeyCode.E;
-    public string promptText;
-    // Update is called once per frame
-    void Update()
+    public ItemResponse[] Responses;
+    private List<UnityAction<Objective, ObjectiveState>> actions = new List<UnityAction<Objective, ObjectiveState>>();
+    
+    public void OnEnable()
     {
-        if(overlappingPlayer && Input.GetKeyDown(interactButton))
+        SubscribeListeners();
+    }
+    public void OnDisable()
+    {
+        UnSubscribeListeners();
+    }
+    public void SubscribeListeners()
+    {
+        foreach (ItemResponse response in Responses)
         {
-            OnInteract?.Invoke();
-            print("Quest Item Collected");
-            Destroy(gameObject);
-            ButtonPrompts.Instance.Close();
+            UnityAction<Objective, ObjectiveState> questFilter = (objective, state) => 
+                { if (objective == response.QuestOrTask && state == response.OnStateChange)
+                    {
+                        response.Listener?.Invoke(objective, state);
+                        print(state.ToString() + " " + objective.name);
+                    }
+                };
+            QuestTracker.OnQuestChanged.AddListener(questFilter);
+            actions.Add(questFilter);
+            print("Subscribed to QuestTracker" + response.ToString());
         }
     }
-    private void OnTriggerEnter(Collider other)
+    public void UnSubscribeListeners()
     {
-        if (other.tag == "Player")
+       foreach (UnityAction<Objective, ObjectiveState> action in actions)
         {
-            overlappingPlayer = true;
-            ButtonPrompts.Instance.Prompt(interactButton, promptText);
+            QuestTracker.OnQuestChanged.RemoveListener(action);
         }
+        actions.Clear();
     }
-    private void OnTriggerExit(Collider other)
+}
+
+[System.Serializable]
+public class ItemResponse
+{
+    public Objective QuestOrTask;
+    public ObjectiveState OnStateChange;
+    public UnityEvent<Objective, ObjectiveState> Listener;
+}
+
+[CustomEditor(typeof(QuestItem))]
+public class QuestItemEditor : Editor
+{
+    public override void OnInspectorGUI()
     {
-        if (other.tag == "Player")
-        {
-            overlappingPlayer = false;
-            ButtonPrompts.Instance.Close();
-        }
+        base.OnInspectorGUI();
     }
 }

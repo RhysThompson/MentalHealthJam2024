@@ -14,4 +14,7 @@ public class Task : Objective
         Quest[] quests = Resources.LoadAll<Quest>("Quests");
         quest = Array.Find(quests, q => q.TaskData.Contains(this));
     }
+
+    public void CompleteTask() => quest.CompleteTask(this);
+    public void StartTask() => quest.StartTask(this);
 }

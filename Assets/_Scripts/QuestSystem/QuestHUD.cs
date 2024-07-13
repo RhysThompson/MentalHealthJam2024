@@ -33,5 +33,18 @@ public class QuestHUD : StaticInstance<QuestHUD>
             }
         }
     }
+    // Update the HUD when a quest is changed
+    public void UpdateQuestHUD(Objective objective, ObjectiveState state)
+    {
+        UpdateQuestHUD();
+    }
+    public void OnEnable()
+    {
+        QuestTracker.OnQuestChanged.AddListener(UpdateQuestHUD);
+    }
+    public void OnDisable()
+    {
+        QuestTracker.OnQuestChanged.RemoveListener(UpdateQuestHUD);
+    }
 
 }

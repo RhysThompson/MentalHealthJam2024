@@ -13,14 +13,19 @@ public class QuestTracker : Singleton<QuestTracker>
     public List<Quest> QuestData { get; private set; } = new List<Quest>();
     public List<Quest> ActiveQuests { get; private set; } = new List<Quest>();
     public List<Quest> CompleteQuests { get; private set; } = new List<Quest>();
+    public static UnityEvent<Objective, ObjectiveState> OnQuestChanged = new UnityEvent<Objective, ObjectiveState>();
     public void Start()
     {
+        QuestData = Resources.LoadAll<Quest>("Quests/").ToList();
+        QuestData.ForEach(x => x.Start());
+
         if (!ValidateIDs())
         {
             Debug.LogError("Quest IDs are not unique. Please fix this in the quest Tracker by changing the ID's of non-unique quests");
         }
-        QuestData = Resources.LoadAll<Quest>("Quests/").ToList();
-        QuestData.ForEach(x => x.Start());
+        // Trigger the OnQuestChanged event for all quests that are already active or complete.
+        ActiveQuests.ForEach(activeQuest => OnQuestChanged?.Invoke(activeQuest,ObjectiveState.Started));
+        CompleteQuests.ForEach(completeQuest => OnQuestChanged?.Invoke(completeQuest,ObjectiveState.Completed));
     }
     public bool ValidateIDs()
     {
@@ -36,7 +41,7 @@ public class QuestTracker : Singleton<QuestTracker>
         }
         quest.OnStart?.Invoke();
         ActiveQuests.Add(quest);
-        QuestHUD.Instance.UpdateQuestHUD();
+        OnQuestChanged?.Invoke(quest, ObjectiveState.Started);
     }
     
     public void CompleteQuest(Quest quest)
@@ -56,22 +61,12 @@ public class QuestTracker : Singleton<QuestTracker>
         ActiveQuests.Remove(quest);
         CompleteQuests.Add(quest);
         print("Completed Quest: " + quest.name);
-        QuestHUD.Instance.UpdateQuestHUD();
+        OnQuestChanged?.Invoke(quest, ObjectiveState.Completed);
     }
 
-    public void CompleteTask(Task task)
-    {
-        task.quest.CompleteTask(task);
-    }
-    public void StartTask(Task task)
-    {
-        task.quest.StartTask(task);
-    }
-    public Quest IDToQuest(int QuestId)
-    {
-        return QuestData.Find(x => x.id == QuestId);
-    }
-
+    public void CompleteTask(Task task) => task.CompleteTask();
+    public void StartTask(Task task) => task.StartTask();
+    public Quest IDToQuest(int QuestId) => QuestData.Find(x => x.id == QuestId);
 }
 
 [CustomEditor(typeof(QuestTracker))]
@@ -82,4 +77,11 @@ public class QuestTrackerEditor : Editor
         base.OnInspectorGUI();
         QuestTracker questTracker = (QuestTracker)target;
     }
+}
+
+public enum ObjectiveState
+{
+    None,
+    Started,
+    Completed
 }

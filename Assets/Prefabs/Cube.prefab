@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 312234538945976693}
   - component: {fileID: 8829166018549682423}
   - component: {fileID: 2944509230337260500}
+  - component: {fileID: 4972586757750980908}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -142,9 +143,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed8e43d167b8ee469a236a3796bb898, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overlappingPlayer: 0
+  Responses: []
+--- !u!114 &4972586757750980908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7292980815436213776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04a76e6404748204482ba65180d4dab5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   OnInteract:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: ebbec88928988fb4b88aff9dc4a494e9, type: 2}
+        m_TargetAssemblyTypeName: Quest, Assembly-CSharp
+        m_MethodName: StartQuest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   interactButton: 101
-  promptText: blah
+  promptText: Interact
+  overlappingPlayer: 0

@@ -21,7 +21,7 @@ public class Quest : Objective
         
         task.OnStart?.Invoke();
         ActiveTasks.Add(task);
-        QuestHUD.Instance.UpdateQuestHUD();
+        QuestTracker.OnQuestChanged?.Invoke(task, ObjectiveState.Started);
     }
 
     public void CompleteTask(Task task)
@@ -41,16 +41,17 @@ public class Quest : Objective
         ActiveTasks.Remove(task);
         CompleteTasks.Add(task);
         CheckComplete();
-        QuestHUD.Instance.UpdateQuestHUD();
+        QuestTracker.OnQuestChanged?.Invoke(task, ObjectiveState.Completed);
     }
     public void CheckComplete()
     {
         if (CompleteTasks.Count == TaskData.Count)
         {
-            QuestTracker.Instance.CompleteQuest(this);
+            CompleteQuest();
         }
-        QuestHUD.Instance.UpdateQuestHUD();
     }
+    public void CompleteQuest() => QuestTracker.Instance.CompleteQuest(this);
+    public void StartQuest() => QuestTracker.Instance.StartQuest(this);
 
     public void Start()
     {
