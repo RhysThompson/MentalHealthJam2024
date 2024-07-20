@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
 using System.ComponentModel;
+using System.Collections;
 
 [Serializable]
 public class QuestTracker : Singleton<QuestTracker>
@@ -62,6 +63,18 @@ public class QuestTracker : Singleton<QuestTracker>
         CompleteQuests.Add(quest);
         print("Completed Quest: " + quest.name);
         OnQuestChanged?.Invoke(quest, ObjectiveState.Completed);
+    }
+    //used by the Quest Script to automatically check if the quest is complete.
+    //This was added here because the Quest script is a ScriptableObject and can't have a Coroutine.
+    public IEnumerator CheckComplete(Quest quest)
+    {
+        yield return new WaitForSeconds(3f);
+        print("auto completing quest: " + quest.name);
+        if (quest.CompleteTasks.Count == quest.TaskData.Count)
+        {
+            
+            CompleteQuest(quest);
+        }
     }
 
     public void CompleteTask(Task task) => task.CompleteTask();

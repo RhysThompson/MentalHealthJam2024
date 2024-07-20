@@ -16,7 +16,6 @@ public class Interactable : MonoBehaviour
         if (overlappingPlayer && Input.GetKeyDown(interactButton))
         {
             OnInteract?.Invoke();
-            print("Quest Item Collected");
             Destroy(gameObject);
             ButtonPrompts.Instance.Close();
         }

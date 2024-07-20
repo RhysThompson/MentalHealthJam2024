@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Collections;
 
 [Serializable]
 [CreateAssetMenu(fileName = "Quest", menuName = "QuestSystem/Quest")]
@@ -40,8 +41,8 @@ public class Quest : Objective
         task.OnComplete?.Invoke();
         ActiveTasks.Remove(task);
         CompleteTasks.Add(task);
-        CheckComplete();
         QuestTracker.OnQuestChanged?.Invoke(task, ObjectiveState.Completed);
+        CheckComplete();
     }
     public void CheckComplete()
     {

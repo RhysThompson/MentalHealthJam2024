@@ -5,18 +5,32 @@ using TMPro;
 using UnityEditor;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
+using Unity.VisualScripting;
 public class QuestHUD : StaticInstance<QuestHUD>
 {
-    //public List<QuestHUDItem> questHUDListings;
     public GameObject questHUDItemPrefab;
-    public GameObject taskHUDItemPrefab;
     public Dictionary<Quest, QuestHUDItem> questHUDItems = new Dictionary<Quest, QuestHUDItem>();
-    public Dictionary<Task, TaskHUDItem> taskHUDItems = new Dictionary<Task, TaskHUDItem>();
+    public Transform toDoGroup;
+    private float delayForCheckMark = 1.5f;
     private void Start()
     {
         //questHUDListings = GetComponentsInChildren<QuestHUDItem>(true).ToList();
         UpdateQuestHUD();
     }
+
+    // Update the HUD when a quest is changed
+    public void UpdateQuestHUD(Objective objective, ObjectiveState state)
+    {
+        if (state == ObjectiveState.Completed && objective is Task)
+        {
+            Task task = objective as Task;
+            TaskHUDItem taskHUDItem = questHUDItems[task.quest].taskHUDItems[task];
+            StartCoroutine(DestroyAfterAnimation(taskHUDItem));
+        }
+        else
+            UpdateQuestHUD();
+    }
+
     public void UpdateQuestHUD()
     {
         foreach (QuestHUDItem item in questHUDItems.Values)
@@ -25,53 +39,21 @@ public class QuestHUD : StaticInstance<QuestHUD>
         }
         questHUDItems.Clear();
 
-        foreach (TaskHUDItem item in taskHUDItems.Values)
-        {
-            Destroy(item.gameObject);
-        }
-        taskHUDItems.Clear();
-
         GenerateQuests();
-        GenerateTasks();
+        questHUDItems.Values.ToList().ForEach(q => q.GenerateTasks());
     }
     public void GenerateQuests()
     {
         List<Quest> quests = QuestTracker.Instance.ActiveQuests;
         foreach (Quest quest in quests)
         {
-            QuestHUDItem HUDItem = Instantiate(questHUDItemPrefab, transform).GetComponent<QuestHUDItem>();
+            QuestHUDItem HUDItem = Instantiate(questHUDItemPrefab, toDoGroup).GetComponent<QuestHUDItem>();
+            HUDItem.quest = quest;
             questHUDItems[quest] = HUDItem;
             HUDItem.ChangeText(quest.name);
         }
     }
 
-    public void GenerateTasks()
-    {
-        List<Task> tasks = new List<Task>(); // Create a new list to store the active tasks
-
-        List<Quest> quests = QuestTracker.Instance.ActiveQuests;
-        foreach (Quest quest in quests)
-        {
-            tasks.AddRange(quest.ActiveTasks); // Add all active tasks from each quest to the tasks list
-        }
-
-        foreach (Task task in tasks)
-        {
-            TaskHUDItem HUDItem = Instantiate(taskHUDItemPrefab, transform).GetComponent<TaskHUDItem>();
-            taskHUDItems[task] = HUDItem;
-            HUDItem.ChangeText("-\t" + task.name + "\n");
-        }
-    }
-    // Update the HUD when a quest is changed
-    public void UpdateQuestHUD(Objective objective, ObjectiveState state)
-    {
-        if(state == ObjectiveState.Completed && objective is Task)
-        {
-            WaitforAnimation(taskHUDItems[objective as Task]);
-        }
-        else
-        UpdateQuestHUD();
-    }
     public void OnEnable()
     {
         QuestTracker.OnQuestChanged.AddListener(UpdateQuestHUD);
@@ -81,13 +63,10 @@ public class QuestHUD : StaticInstance<QuestHUD>
         QuestTracker.OnQuestChanged.RemoveListener(UpdateQuestHUD);
     }
 
-    public IEnumerable WaitforAnimation(TaskHUDItem task)
+    public IEnumerator DestroyAfterAnimation(TaskHUDItem task)
     {
         task.PlayCompleteAnimation();
-        while (!task.isFinishedAnimation())
-        {
-            yield return null;
-        }
+        yield return new WaitForSeconds(delayForCheckMark); // Add a delay of 1 second
         Destroy(task.gameObject);
         UpdateQuestHUD();
     }

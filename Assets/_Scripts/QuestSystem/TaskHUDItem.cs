@@ -7,6 +7,7 @@ public class TaskHUDItem : MonoBehaviour
 {
     public TextMeshProUGUI taskName;
     public Animator checkBoxAnimator;
+    public Task task;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +17,7 @@ public class TaskHUDItem : MonoBehaviour
 
     public void ChangeText(string newTaskName)
     {
-        taskName.text = "Task 1: " + newTaskName;
+        taskName.text =newTaskName;
     }
 
     public void PlayCompleteAnimation()
