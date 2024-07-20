@@ -42,7 +42,7 @@ public class Quest : Objective
         ActiveTasks.Remove(task);
         CompleteTasks.Add(task);
         QuestTracker.OnQuestChanged?.Invoke(task, ObjectiveState.Completed);
-        CheckComplete();
+        QuestTracker.Instance.CheckComplete(this);
     }
     public void CheckComplete()
     {

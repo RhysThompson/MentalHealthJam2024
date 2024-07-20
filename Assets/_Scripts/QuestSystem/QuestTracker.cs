@@ -66,13 +66,16 @@ public class QuestTracker : Singleton<QuestTracker>
     }
     //used by the Quest Script to automatically check if the quest is complete.
     //This was added here because the Quest script is a ScriptableObject and can't have a Coroutine.
-    public IEnumerator CheckComplete(Quest quest)
+    public void CheckComplete(Quest quest)
     {
-        yield return new WaitForSeconds(3f);
+        StartCoroutine(CheckCompleteWait(quest));
+    }
+    public IEnumerator CheckCompleteWait(Quest quest)
+    {
+        yield return new WaitForSeconds(1.5f);
         print("auto completing quest: " + quest.name);
         if (quest.CompleteTasks.Count == quest.TaskData.Count)
         {
-            
             CompleteQuest(quest);
         }
     }
