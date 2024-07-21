@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7342689919374789009}
   - component: {fileID: 312234538945976693}
   - component: {fileID: 8829166018549682423}
-  - component: {fileID: 2944509230337260500}
   - component: {fileID: 4972586757750980908}
   m_Layer: 0
   m_Name: Cube
@@ -131,19 +130,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2944509230337260500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7292980815436213776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed8e43d167b8ee469a236a3796bb898, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Responses: []
 --- !u!114 &4972586757750980908
 MonoBehaviour:
   m_ObjectHideFlags: 0

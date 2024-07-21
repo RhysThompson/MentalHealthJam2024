@@ -21,18 +21,6 @@ public class QuestHUDItem : MonoBehaviour
     {
         questText.text = "Quest: " + newQuestText;
     }
-    public void Open()
-    {
-        gameObject.SetActive(true);
-    }
-    public void Close()
-    {
-        gameObject.SetActive(false);
-    }
-    public void PlayCompleteAnimation()
-    {
-
-    }
 
     public void GenerateTasks()
     {
@@ -42,7 +30,7 @@ public class QuestHUDItem : MonoBehaviour
         }
         taskHUDItems.Clear();
 
-        foreach (Task task in quest.ActiveTasks)
+        foreach (Task task in quest.GetActiveTasks())
         {
             TaskHUDItem HUDItem = Instantiate(taskHUDItemPrefab, transform).GetComponent<TaskHUDItem>();
             HUDItem.task = task;
