@@ -10,5 +10,5 @@ AssetOrigin:
   productId: 267961
   packageName: 'Starter Assets: Character Controllers | URP'
   packageVersion: 1.0.1
-  assetPath: Assets/Starter Assets/Runtime/ThirdPersonController/Prefabs/PlayerArmature.prefab
+  assetPath: Assets/Prefabs/PlayerArmature.prefab
   uploadId: 653737
