@@ -24,8 +24,4 @@ public class TaskHUDItem : MonoBehaviour
     {
         checkBoxAnimator.SetTrigger("CheckOff");
     }
-    public bool isFinishedAnimation()
-    {
-        return (checkBoxAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
-    }
 }
