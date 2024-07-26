@@ -9,6 +9,7 @@ namespace StarterAssets
 	{
 		[Header("Character Input Values")]
 		public Vector2 move;
+		public bool moveDisabled;
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
@@ -23,7 +24,10 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
 		{
-			MoveInput(value.Get<Vector2>());
+			if(moveDisabled)
+				move = Vector2.zero;
+			else
+				MoveInput(value.Get<Vector2>());
 		}
 
 		public void OnLook(InputValue value)
