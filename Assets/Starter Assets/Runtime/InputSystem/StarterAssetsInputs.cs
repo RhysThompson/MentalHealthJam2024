@@ -36,6 +36,10 @@ namespace StarterAssets
 			{
 				LookInput(value.Get<Vector2>());
 			}
+			else
+			{
+                LookInput(Vector2.zero);
+            }
 		}
 
 		public void OnJump(InputValue value)
