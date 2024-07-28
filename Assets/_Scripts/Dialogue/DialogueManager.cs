@@ -9,12 +9,20 @@ public class DialogueManager : StaticInstance<DialogueManager>
 {
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
+    /// <summary>
+    /// The speed at which the text is displayed, ranges from 1 to 100
+    /// </summary>
+    public int textSpeed = 1;
     private Queue<string> sentences;
     private StarterAssetsInputs playerInputs;
     private void Start()
     {
         sentences = new Queue<string>();
         playerInputs = FindFirstObjectByType<StarterAssetsInputs>();
+        if (textSpeed < 1 || textSpeed > 100)
+        {
+            Debug.LogError("Text speed must be between 1 and 100");
+        }
     }
 
     public void StartDialogue(Dialogue dialogue)
@@ -45,8 +53,25 @@ public class DialogueManager : StaticInstance<DialogueManager>
         }
 
         string sentence = sentences.Dequeue();
-        dialogueText.text = sentence;
+        StopAllCoroutines();
+        StartCoroutine(TypeSentence(sentence));
         print(sentence);
+    }
+
+    private IEnumerator TypeSentence(string sentence)
+    {
+        int accum = 0;
+        dialogueText.text = "";
+        foreach (char letter in sentence.ToCharArray())
+        {
+            accum = 0;
+            dialogueText.text += letter;
+            while (accum != 100 - textSpeed)
+            {
+                accum++;
+                yield return new WaitForEndOfFrame();
+            }
+        }
     }
     public void EndDialogue() {
         Debug.Log("End of conversation");
