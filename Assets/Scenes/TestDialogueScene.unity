@@ -936,7 +936,7 @@ MonoBehaviour:
   dialogue:
     name: Dwanye
     sentences:
-    - Hi I'm Dwanye.
+    - 'Hi I''m Dwanye. '
     - Can you feel what the rock is cooking?
   SpeakNoises:
   - {fileID: 8300000, guid: c93c41ffc2ce0b2479d7cc4af87f3026, type: 3}
