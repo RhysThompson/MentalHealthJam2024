@@ -5,8 +5,9 @@ using UnityEngine;
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
+    public AudioClip[] SpeakNoises;
     public void TriggerDialogue()
     {
-        DialogueManager.Instance.StartDialogue(dialogue);
+        DialogueManager.Instance.StartDialogue(dialogue,SpeakNoises);
     }
 }

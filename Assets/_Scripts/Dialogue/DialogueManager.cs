@@ -25,13 +25,18 @@ public class DialogueManager : StaticInstance<DialogueManager>
         }
     }
 
-    public void StartDialogue(Dialogue dialogue)
+    public void StartDialogue(Dialogue dialogue, AudioClip[] SpeakNoises = null)
     {
         sentences.Clear();
         nameText.text = dialogue.name;
         foreach (string sentence in dialogue.sentences)
         {
             sentences.Enqueue(sentence);
+        }
+        if (SpeakNoises != null && SpeakNoises.Length > 0)
+        {
+            int rand = Random.Range(0, SpeakNoises.Length);
+            //AudioManager.Instance.PlayClipAtPoint(SpeakNoises[rand], Camera.main.transform.position, 1f);
         }
 
         DialogueBoxUI.Instance.Open();
