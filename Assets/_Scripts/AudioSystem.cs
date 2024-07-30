@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
 using UnityEngine;
@@ -19,7 +20,6 @@ public class AudioSystem : Singleton<AudioSystem> {
     public bool AutoPlayMusicOnSceneChange = true;
     [SerializedDictionary("SceneName", "MusicNameToPlay")] 
     public SerializedDictionary<string,string> MusicScenePairings = new SerializedDictionary<string,string>();
-    
     [System.Serializable] public class Sound
     {
         public string name;
@@ -72,6 +72,10 @@ public class AudioSystem : Singleton<AudioSystem> {
             _soundsSource.PlayOneShot(sfxSounds[name], volume);
         }
     }
+    public void PlaySFX(AudioClip clip, float volume = 1f)
+    {
+        _soundsSource.PlayOneShot(clip, volume);
+    }
     
 
     public void Play3DSound(AudioClip clip, Vector3 pos, float vol = 1) {
@@ -86,7 +90,27 @@ public class AudioSystem : Singleton<AudioSystem> {
         string nextSceneName = next.name;
         if(MusicScenePairings.ContainsKey(nextSceneName))
             PlayMusic(MusicScenePairings[nextSceneName]);
-        else
-            print(nextSceneName + "was not found in Music Scene pairings.\n Make sure this name was added to the Audio system or if no music was intended to play for this scene, ignore this message.");
+        //else
+            //print(nextSceneName + "was not found in Music Scene pairings.\n Make sure this name was added to the Audio system or if no music was intended to play for this scene, ignore this message.");
+    }
+    public bool StillSpeaking = false;
+    public void SpeakWordsOnLoop(AudioClip[] words)
+    {
+        StartCoroutine(SpeakWordsOnLoopRoutine(words));
+    }
+    IEnumerator SpeakWordsOnLoopRoutine(AudioClip[] words)
+    {
+        StillSpeaking = true;
+        while (StillSpeaking)
+        {
+            _soundsSource.Stop();
+            int rand = UnityEngine.Random.Range(0, words.Length-1);
+            _soundsSource.clip = words[rand];
+            _soundsSource.Play();
+            while(_soundsSource.isPlaying)
+            {
+                yield return null;
+            }
+        }
     }
 }

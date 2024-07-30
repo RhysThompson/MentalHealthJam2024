@@ -8,6 +8,7 @@ public class DialogueTrigger : MonoBehaviour
     public AudioClip[] SpeakNoises;
     public void TriggerDialogue()
     {
-        DialogueManager.Instance.StartDialogue(dialogue,SpeakNoises);
+        DialogueManager.Instance.SpeakNoises = SpeakNoises;
+        DialogueManager.Instance.StartDialogue(dialogue);
     }
 }

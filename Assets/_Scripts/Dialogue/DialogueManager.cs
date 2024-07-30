@@ -15,6 +15,7 @@ public class DialogueManager : StaticInstance<DialogueManager>
     public int textSpeed = 1;
     private Queue<string> sentences;
     private StarterAssetsInputs playerInputs;
+    [HideInInspector] public AudioClip[] SpeakNoises;
     private void Start()
     {
         sentences = new Queue<string>();
@@ -25,18 +26,13 @@ public class DialogueManager : StaticInstance<DialogueManager>
         }
     }
 
-    public void StartDialogue(Dialogue dialogue, AudioClip[] SpeakNoises = null)
+    public void StartDialogue(Dialogue dialogue)
     {
         sentences.Clear();
         nameText.text = dialogue.name;
         foreach (string sentence in dialogue.sentences)
         {
             sentences.Enqueue(sentence);
-        }
-        if (SpeakNoises != null && SpeakNoises.Length > 0)
-        {
-            int rand = Random.Range(0, SpeakNoises.Length);
-            //AudioManager.Instance.PlayClipAtPoint(SpeakNoises[rand], Camera.main.transform.position, 1f);
         }
 
         DialogueBoxUI.Instance.Open();
@@ -60,7 +56,10 @@ public class DialogueManager : StaticInstance<DialogueManager>
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
-        print(sentence);
+        if (SpeakNoises != null && SpeakNoises.Length > 0)
+        {
+            AudioSystem.Instance.SpeakWordsOnLoop(SpeakNoises);
+        }
     }
 
     private IEnumerator TypeSentence(string sentence)
@@ -77,6 +76,7 @@ public class DialogueManager : StaticInstance<DialogueManager>
                 yield return new WaitForEndOfFrame();
             }
         }
+        AudioSystem.Instance.StillSpeaking = false;
     }
     public void EndDialogue() {
         Debug.Log("End of conversation");
