@@ -96,6 +96,8 @@ public class AudioSystem : Singleton<AudioSystem> {
     public bool StillSpeaking = false;
     public void SpeakWordsOnLoop(AudioClip[] words)
     {
+        if (StillSpeaking) return;
+
         StartCoroutine(SpeakWordsOnLoopRoutine(words));
     }
     IEnumerator SpeakWordsOnLoopRoutine(AudioClip[] words)

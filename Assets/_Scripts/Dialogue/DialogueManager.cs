@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 //based on Dialogue Tutorial by Brackeys: https://www.youtube.com/watch?v=_nRzoTzeyxU
+//this is no longer used in the project, as it was replaced by the DialogueScript
 public class DialogueManager : StaticInstance<DialogueManager>
 {
     public TextMeshProUGUI nameText;
@@ -16,6 +17,7 @@ public class DialogueManager : StaticInstance<DialogueManager>
     private Queue<string> sentences;
     private StarterAssetsInputs playerInputs;
     [HideInInspector] public AudioClip[] SpeakNoises;
+
     private void Start()
     {
         sentences = new Queue<string>();
@@ -30,10 +32,10 @@ public class DialogueManager : StaticInstance<DialogueManager>
     {
         sentences.Clear();
         nameText.text = dialogue.name;
-        foreach (string sentence in dialogue.sentences)
-        {
-            sentences.Enqueue(sentence);
-        }
+        //foreach (string sentence in dialogue.sentences)
+        //{
+            //sentences.Enqueue(sentence);
+        //}
 
         DialogueBoxUI.Instance.Open();
         DisplayNextSentence();

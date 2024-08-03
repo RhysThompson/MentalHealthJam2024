@@ -413,8 +413,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: NPC Name Here
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5bda46018764f314086687e4f50a611b, type: 2}
-  m_sharedMaterial: {fileID: 7146047273890785522, guid: 5bda46018764f314086687e4f50a611b,
+  m_fontAsset: {fileID: 11400000, guid: 73d54564b5aa1294292a308e5082eabd, type: 2}
+  m_sharedMaterial: {fileID: -113757948781640975, guid: 73d54564b5aa1294292a308e5082eabd,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -477,7 +477,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -759.9377, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -548,10 +548,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: NPC Name Here
+  m_text: Hello!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5bda46018764f314086687e4f50a611b, type: 2}
-  m_sharedMaterial: {fileID: 7146047273890785522, guid: 5bda46018764f314086687e4f50a611b,
+  m_fontAsset: {fileID: 11400000, guid: 73d54564b5aa1294292a308e5082eabd, type: 2}
+  m_sharedMaterial: {fileID: -113757948781640975, guid: 73d54564b5aa1294292a308e5082eabd,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -710,9 +710,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1031042880}
-        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
-        m_MethodName: DisplayNextSentence
+      - m_Target: {fileID: 1031042882}
+        m_TargetAssemblyTypeName: DialogueScript, Assembly-CSharp
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -933,11 +933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3123e611b4cfed43b5b7071e6d715b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    name: Dwanye
-    sentences:
-    - 'Hi I''m Dwanye. '
-    - Can you feel what the rock is cooking?
+  dialogue: {fileID: 11400000, guid: af049184c27dd384dad0bd56fbf6e6a6, type: 2}
   SpeakNoises:
   - {fileID: 8300000, guid: c93c41ffc2ce0b2479d7cc4af87f3026, type: 3}
   - {fileID: 8300000, guid: a54c921b44fb6b44e887468259ab3b9f, type: 3}
@@ -970,6 +966,53 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 706d2da4fe440d44b9ecab50e149396a, type: 3}
   - {fileID: 8300000, guid: 5f242c042b9395b41892408e9a89cdee, type: 3}
   - {fileID: 8300000, guid: 4934e4a2c9620554aa4cc15bd4ce8102, type: 3}
+  DialogueScript: {fileID: 0}
+--- !u!1 &369836812
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 369836814}
+  - component: {fileID: 369836813}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &369836813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369836812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7efb1ae7a61b254489a4d92a2d5a7065, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForbidenStateTransitions:
+    _serializedList: []
+--- !u!4 &369836814
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369836812}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 927.98645, y: 517.6238, z: -53.219166}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &542508511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1713,7 +1756,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1031042881}
-  - component: {fileID: 1031042880}
+  - component: {fileID: 1031042882}
   m_Layer: 0
   m_Name: DialogueManager
   m_TagString: Untagged
@@ -1721,22 +1764,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1031042880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1031042879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 434857366b0cf6547a06180943d5bc47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nameText: {fileID: 180988966}
-  dialogueText: {fileID: 239342602}
-  textSpeed: 90
-  SpeakNoises: []
 --- !u!4 &1031042881
 Transform:
   m_ObjectHideFlags: 0
@@ -1752,6 +1779,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1552617560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1031042882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031042879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19b747f11f41b7248aed9210b9b64750, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DialogueObject: {fileID: 0}
+  DialogueBoxText: {fileID: 239342602}
+  DialogueBoxName: {fileID: 180988966}
+  DialogueBox: {fileID: 1552617560}
 --- !u!1001 &1221041499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4170,3 +4213,4 @@ SceneRoots:
   - {fileID: 1361316087}
   - {fileID: 1552617560}
   - {fileID: 73941795}
+  - {fileID: 369836814}

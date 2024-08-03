@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e1804e40b1aa6d4469525f347ef1e9bd
+guid: f126d521dd1f700498035c2fd66cfbcb
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Magic Saturday
+  - Rusty Hooks
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
