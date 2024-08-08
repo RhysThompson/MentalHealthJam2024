@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using JetBrains.Annotations;
-
+using System.Linq;
+using UnityEngine.Events;
 [System.Serializable]
 public class DialogueInstruction
 {
@@ -15,6 +14,8 @@ public class DialogueInstruction
     public bool WaitForInput;
     public float StartDelay;
     public float PerLetterDelay = 0.05f;
+    public VoiceTone voiceTone;
+    public int eventIndex;
     //public DialogueActions Action;
     //public int StatBoostAmount;
     public DialogueInstruction Clone()
@@ -27,7 +28,8 @@ public class DialogueInstruction
         newObj.WaitForInput = WaitForInput;
         newObj.StartDelay = StartDelay;
         newObj.PerLetterDelay = PerLetterDelay;
-
+        newObj.voiceTone = voiceTone;
+        newObj.eventIndex = eventIndex;
         return newObj;
     }
 }
@@ -47,9 +49,9 @@ public class DialogueScript : MonoBehaviour
     public TextMeshProUGUI DialogueBoxText;
     public TextMeshProUGUI DialogueBoxName;
     public RectTransform DialogueBox;
-    public AudioClip[] SpeakNoises;
+    public Dictionary<VoiceTone,List<AudioClip>> SpeakNoises;
     private bool skipTextAnim = false;
-    //public GameObject DialogueBoxIndicator;
+    [HideInInspector] public UnityEvent[] events;
 
     enum DialogueState
     {
@@ -90,6 +92,7 @@ public class DialogueScript : MonoBehaviour
                     DialogueDelayTimer = 0.5f;
                     DialogueDelayTimer += DialogueInstructions.Peek().StartDelay;
                     CurrentState = DialogueState.WRITING;
+                    events[DialogueInstructions.Peek().eventIndex]?.Invoke(); //invoke the event for the very first instruction
                     break;
 
                 case DialogueState.WRITING:
@@ -111,9 +114,9 @@ public class DialogueScript : MonoBehaviour
 
                     while (DialogueDelayTimer <= 0)
                     {
-                        if (SpeakNoises != null && SpeakNoises.Length > 0)
+                        if (SpeakNoises != null && SpeakNoises[DialogueInstructions.Peek().voiceTone].Count > 0) //play voice noises
                         {
-                            AudioSystem.Instance.SpeakWordsOnLoop(SpeakNoises);
+                            AudioSystem.Instance.SpeakWordsOnLoop(SpeakNoises[DialogueInstructions.Peek().voiceTone].ToArray<AudioClip>());
                         }
 
                         if (DialogueInstructions.Peek().Text.Length > 0)
@@ -129,9 +132,10 @@ public class DialogueScript : MonoBehaviour
                         {
                             skipTextAnim = false;
                             DialogueInstructions.Dequeue(); // remove the instruction that was just completed
+                            
                             if (DialogueInstructions.Count >= 1)
                             {
-                                if(DialogueInstructions.Peek().WaitForInput)
+                                if (DialogueInstructions.Peek().WaitForInput)
                                     CurrentState = DialogueState.WAITING;
 
                                 DialogueDelayTimer = DialogueInstructions.Peek().StartDelay;
@@ -161,9 +165,12 @@ public class DialogueScript : MonoBehaviour
                     print("End of conversation");
                     break;
             }
+
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+                OnInteract();
         }
     }
-    public void OnClick()
+    public void OnInteract()
     {
         switch (CurrentState)
         {
@@ -173,6 +180,7 @@ public class DialogueScript : MonoBehaviour
 
             case DialogueState.WAITING:
                 CurrentState = DialogueState.WRITING;
+                events[DialogueInstructions.Peek().eventIndex]?.Invoke(); //invoke the event for the next instruction
                 break;
             case DialogueState.WAITINGTOCLOSE:
                 CurrentState = DialogueState.CLOSINGBOX;

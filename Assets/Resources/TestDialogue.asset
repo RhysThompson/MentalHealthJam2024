@@ -20,6 +20,8 @@ MonoBehaviour:
     WaitForInput: 0
     StartDelay: 1
     PerLetterDelay: 0.1
+    voiceTone: 0
+    eventIndex: 0
   - Text: Can you feel what the rock is cooking?
     Name: Dwanye
     ClearExistingText: 0
@@ -27,3 +29,5 @@ MonoBehaviour:
     WaitForInput: 1
     StartDelay: 1
     PerLetterDelay: 0.1
+    voiceTone: 0
+    eventIndex: 1
