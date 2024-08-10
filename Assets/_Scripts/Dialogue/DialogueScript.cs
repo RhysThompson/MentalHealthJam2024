@@ -49,9 +49,8 @@ public class DialogueScript : MonoBehaviour
     public TextMeshProUGUI DialogueBoxText;
     public TextMeshProUGUI DialogueBoxName;
     public RectTransform DialogueBox;
-    public Dictionary<VoiceTone,List<AudioClip>> SpeakNoises;
     private bool skipTextAnim = false;
-    [HideInInspector] public UnityEvent[] events;
+    
 
     enum DialogueState
     {
@@ -116,7 +115,8 @@ public class DialogueScript : MonoBehaviour
                     {
                         if (SpeakNoises != null && SpeakNoises[DialogueInstructions.Peek().voiceTone].Count > 0) //play voice noises
                         {
-                            AudioSystem.Instance.SpeakWordsOnLoop(SpeakNoises[DialogueInstructions.Peek().voiceTone].ToArray<AudioClip>());
+                            AudioClip[] clips = SpeakNoises[DialogueInstructions.Peek().voiceTone].ToArray<AudioClip>();
+                            AudioSystem.Instance.SpeakWordsOnLoop(clips, speakerHead, headExpansionMult);
                         }
 
                         if (DialogueInstructions.Peek().Text.Length > 0)
@@ -187,8 +187,16 @@ public class DialogueScript : MonoBehaviour
                 break;
         }
     }
-    public void StartDialogue(Dialogue dialogue)
+    private Dictionary<VoiceTone, List<AudioClip>> SpeakNoises;
+    private UnityEvent[] events;
+    private Transform speakerHead;
+    private Vector3 headExpansionMult;
+    public void StartDialogue(Dialogue dialogue,Dictionary<VoiceTone, List<AudioClip>> SpeakNoises, UnityEvent[] events, Transform speakerHead, Vector3 headExpansionMult)
     {
+        this.SpeakNoises = SpeakNoises;
+        this.events = events;
+        this.speakerHead = speakerHead;
+        this.headExpansionMult = headExpansionMult;
         DialogueInstructions = new Queue<DialogueInstruction>();
         foreach (DialogueInstruction i in dialogue.DialogueInstructions)
             DialogueInstructions.Enqueue(i.Clone());

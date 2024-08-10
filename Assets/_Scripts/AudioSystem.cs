@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -94,13 +95,13 @@ public class AudioSystem : Singleton<AudioSystem> {
             //print(nextSceneName + "was not found in Music Scene pairings.\n Make sure this name was added to the Audio system or if no music was intended to play for this scene, ignore this message.");
     }
     public bool StillSpeaking = false;
-    public void SpeakWordsOnLoop(AudioClip[] words)
+    public void SpeakWordsOnLoop(AudioClip[] words, Transform speakerHead, Vector3 headExpansionMult)
     {
         if (StillSpeaking) return;
 
-        StartCoroutine(SpeakWordsOnLoopRoutine(words));
+        StartCoroutine(SpeakWordsOnLoopRoutine(words, speakerHead, headExpansionMult));
     }
-    IEnumerator SpeakWordsOnLoopRoutine(AudioClip[] words)
+    IEnumerator SpeakWordsOnLoopRoutine(AudioClip[] words, Transform speakerHead, Vector3 headExpansionMult)
     {
         StillSpeaking = true;
         while (StillSpeaking)
@@ -109,10 +110,30 @@ public class AudioSystem : Singleton<AudioSystem> {
             int rand = UnityEngine.Random.Range(0, words.Length-1);
             _soundsSource.clip = words[rand];
             _soundsSource.Play();
-            while(_soundsSource.isPlaying)
+            float clipVolume = GetVolumeOfAudioClip(_soundsSource.clip);
+            Vector3 targetHeadScale = new Vector3(1 + clipVolume * headExpansionMult.x, 1 + clipVolume * headExpansionMult.y, 1 + clipVolume * headExpansionMult.z);
+            speakerHead.DOScale(targetHeadScale, 0.5f).OnComplete(() => speakerHead.DOScale(1, 0.5f));
+            while (_soundsSource.isPlaying)
             {
+                speakerHead.LookAt(Camera.main.transform);
                 yield return null;
             }
         }
+    }
+
+    public float GetVolumeOfAudioClip(AudioClip clip) // finds the volume of the loudest sample in the clip and return it.
+    {
+        float[] samples = new float[clip.samples * clip.channels];
+        clip.GetData(samples, 0);
+        float max = 0;
+        for (int i = 0; i < samples.Length; i++)
+        {
+            float sample = Mathf.Abs(samples[i]);
+            if (sample > max)
+            {
+                max = sample;
+            }
+        }
+        return max;
     }
 }
