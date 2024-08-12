@@ -756,12 +756,6 @@ Transform:
   - {fileID: 1213932040}
   m_Father: {fileID: 2031647733}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &242370419 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 587925492125406156, guid: 64dce48905ffd9b4293e595fa6941544,
-    type: 3}
-  m_PrefabInstance: {fileID: 1762682258}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &256184035
 GameObject:
   m_ObjectHideFlags: 0
@@ -1994,6 +1988,12 @@ Transform:
   - {fileID: 558418666}
   m_Father: {fileID: 982117471}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &828471132 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1399579107103275648, guid: 64dce48905ffd9b4293e595fa6941544,
+    type: 3}
+  m_PrefabInstance: {fileID: 1762682258}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &836086957
 GameObject:
   m_ObjectHideFlags: 0
@@ -4975,7 +4975,7 @@ PrefabInstance:
     - target: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544,
         type: 3}
       propertyPath: m_Name
-      value: PlayerArmature
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5023,11 +5023,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LookTarget: {fileID: 0}
-  neck: {fileID: 242370419}
+  head: {fileID: 828471132}
   lookingAtObject: 0
-  XLookOffset: 15
-  maxHeadTurn: 90
-  minHeadTurn: -90
+  maxHeadTurn: 50
+  minHeadTurn: -50
+  lookSpeed: 0.5
+  lookWeight: 0.9
 --- !u!1 &1764214107
 GameObject:
   m_ObjectHideFlags: 0

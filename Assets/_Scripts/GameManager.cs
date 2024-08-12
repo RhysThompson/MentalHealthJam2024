@@ -3,8 +3,6 @@ using StarterAssets;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.WSA;
 
 [Serializable]
 public enum GameState
