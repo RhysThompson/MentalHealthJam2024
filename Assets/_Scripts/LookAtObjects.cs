@@ -14,7 +14,7 @@ public class LookAtObjects : MonoBehaviour
     private float turnProgress;
     private float turnAwayProgress;
     public float lookWeight = 1;
-    public bool lookingAway;
+    private bool lookingAway;
     
     private void Start()
     {
