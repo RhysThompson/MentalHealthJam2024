@@ -79,14 +79,16 @@ public class GameManager : StaticInstance<GameManager> {
     public void DisableMovement()
     {
         playerInputs.moveDisabled = true;
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        playerInputs.jumpDisabled = true;
+        Cursor.lockState = CursorLockMode.None;
         playerInputs.cursorLocked = false;
         playerInputs.cursorInputForLook = false;
     }
     public void EnableMovement()
     {
         playerInputs.moveDisabled = false;
-        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        playerInputs.jumpDisabled = false;
+        Cursor.lockState = CursorLockMode.Locked;
         playerInputs.cursorLocked = true;
         playerInputs.cursorInputForLook = true;
     }

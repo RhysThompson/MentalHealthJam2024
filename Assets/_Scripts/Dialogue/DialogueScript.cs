@@ -88,7 +88,7 @@ public class DialogueScript : MonoBehaviour
                 case DialogueState.OPENINGBOX:
 
                     DialogueBoxUI.Instance.Open();
-                    DialogueDelayTimer = 0.5f;
+                    DialogueDelayTimer = 0f;
                     DialogueDelayTimer += DialogueInstructions.Peek().StartDelay;
                     CurrentState = DialogueState.WRITING;
                     events[DialogueInstructions.Peek().eventIndex]?.Invoke(); //invoke the event for the very first instruction
@@ -128,7 +128,7 @@ public class DialogueScript : MonoBehaviour
                             else
                                 DialogueDelayTimer += DialogueInstructions.Peek().PerLetterDelay;
                         }
-                        else
+                        else //dialogue instruction is complete
                         {
                             skipTextAnim = false;
                             DialogueInstructions.Dequeue(); // remove the instruction that was just completed
@@ -144,7 +144,6 @@ public class DialogueScript : MonoBehaviour
                             {
                                 CurrentState = DialogueState.WAITINGTOCLOSE;
                             }
-                            
                             break;
                         }
                     }
@@ -176,6 +175,7 @@ public class DialogueScript : MonoBehaviour
         {
             case DialogueState.WRITING:
                 skipTextAnim = true;
+                DialogueDelayTimer = 0;
                 break;
 
             case DialogueState.WAITING:

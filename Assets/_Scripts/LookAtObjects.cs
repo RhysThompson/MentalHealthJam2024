@@ -14,7 +14,8 @@ public class LookAtObjects : MonoBehaviour
     private float turnProgress;
     private float turnAwayProgress;
     public float lookWeight = 1;
-    private bool lookingAway;
+    public bool lookingAway;
+    
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -65,7 +66,6 @@ public class LookAtObjects : MonoBehaviour
                 lookingAway = true;
                 turnProgress = 0;
             }
-            
         }
     }
     public void OnTriggerExit(Collider other)
@@ -78,6 +78,4 @@ public class LookAtObjects : MonoBehaviour
             lookingAway = false;
         }
     }
-
-
 }
