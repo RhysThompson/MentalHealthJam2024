@@ -17,7 +17,8 @@ public abstract class QuestItem : MonoBehaviour
     }
     public void OnDestroy()
     {
-        QuestTracker.Instance.RemoveListener(gameObject);
+        if(QuestTracker.Instance != null)
+            QuestTracker.Instance.RemoveListener(gameObject);
     }
     public abstract void OnQuestUpdated(Objective objective);
 }

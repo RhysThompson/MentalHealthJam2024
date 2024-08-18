@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
@@ -13,8 +15,10 @@ public static class Helpers
     /// transform.DestroyChildren();
     /// </code>
     /// </summary>
-    public static void DestroyChildren(this Transform t) {
-        foreach (Transform child in t) Object.Destroy(child.gameObject);
+    public static IEnumerator InvokeDelayed(Action callback, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        callback();
     }
 }
 

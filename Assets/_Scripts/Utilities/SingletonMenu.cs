@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 /// <summary>
 /// Base for menus. Note that multiple
@@ -16,17 +13,17 @@ public abstract class SingletonMenu<T> : Singleton<T> where T : SingletonMenu<T>
         canvas = GetComponent<Canvas>();
         canvas.enabled = false;
     }
-    public void Open()
+    public virtual void Open()
     { 
         canvas.enabled=true;
         isOpen = true;
     }
-    public void Close()
+    public virtual void Close()
     { 
         canvas.enabled = false;
         isOpen = false;
     }
-    public void Toggle()
+    public virtual void Toggle()
     {
         if(isOpen)
             Close();
