@@ -14,4 +14,4 @@
 *.spriteatlas text eol=lf
 
 [core]
-	autocrlf = false
+	autocrlf=false
