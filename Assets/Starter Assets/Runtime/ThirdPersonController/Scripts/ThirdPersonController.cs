@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -374,7 +375,9 @@ namespace StarterAssets
                 if (FootstepAudioClips.Length > 0)
                 {
                     var index = Random.Range(0, FootstepAudioClips.Length);
-                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
+                    //put position and volume in a list to send to the SendMessage function
+                    List<System.Object> transformFloatTuple = new List<System.Object>() { transform.TransformPoint(_controller.center), FootstepAudioVolume };
+                    SendMessage("OnStep", transformFloatTuple);
                 }
             }
         }
