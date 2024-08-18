@@ -16,7 +16,7 @@ public class Interactable : MonoBehaviour
         if (overlappingPlayer && Input.GetKeyDown(interactButton))
         {
             OnInteract?.Invoke();
-            Destroy(gameObject);
+            //Destroy(gameObject);
             ButtonPrompts.Instance.Close();
         }
     }
