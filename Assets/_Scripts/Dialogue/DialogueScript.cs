@@ -12,7 +12,7 @@ public class DialogueInstruction
     public bool ClearExistingText;
     public bool NewLine;
     public bool WaitForInput;
-    public float StartDelay;
+    public float StartDelay = 0;
     public float PerLetterDelay = 0.05f;
     public VoiceTone voiceTone;
     public int eventIndex;
@@ -42,13 +42,13 @@ public class Dialogue : ScriptableObject
 
 public class DialogueScript : MonoBehaviour
 {
-    public Dialogue DialogueObject;
     public Queue<DialogueInstruction> DialogueInstructions;
     public static bool InDialogue = false;
     private float DialogueDelayTimer = 0f;
     public TextMeshProUGUI DialogueBoxText;
     public TextMeshProUGUI DialogueBoxName;
     public RectTransform DialogueBox;
+    public GameObject DialogueBoxIndicator;
     private bool skipTextAnim = false;
     
 
@@ -68,7 +68,7 @@ public class DialogueScript : MonoBehaviour
     void Start()
     {
         DialogueBox.localScale = new Vector3(1, 0, 1);
-        //DialogueBoxIndicator.SetActive(false);
+        DialogueBoxIndicator.SetActive(false);
     }
 
     void Update()
@@ -95,7 +95,7 @@ public class DialogueScript : MonoBehaviour
                     break;
 
                 case DialogueState.WRITING:
-
+                    DialogueBoxIndicator.SetActive(false);
                     DialogueDelayTimer -= Time.deltaTime;
                     DialogueBoxName.text = DialogueInstructions.Peek().Name;
 
@@ -151,11 +151,14 @@ public class DialogueScript : MonoBehaviour
 
                 case DialogueState.WAITING:
                     AudioSystem.Instance.StillSpeaking = false;
+                    DialogueBoxIndicator.SetActive(true);
                     break;
                 case DialogueState.WAITINGTOCLOSE:
                     AudioSystem.Instance.StillSpeaking = false;
+                    DialogueBoxIndicator.SetActive(true);
                     break;
                 case DialogueState.CLOSINGBOX:
+                    DialogueBoxIndicator.SetActive(false);
                     DialogueBoxUI.Instance.Close();
 
                     InDialogue = false;
@@ -193,6 +196,8 @@ public class DialogueScript : MonoBehaviour
     private Vector3 headExpansionMult;
     public void StartDialogue(Dialogue dialogue,Dictionary<VoiceTone, List<AudioClip>> SpeakNoises, UnityEvent[] events, Transform speakerHead, Vector3 headExpansionMult)
     {
+        if(InDialogue)
+            return;
         this.SpeakNoises = SpeakNoises;
         this.events = events;
         this.speakerHead = speakerHead;
