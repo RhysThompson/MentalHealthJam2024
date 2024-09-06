@@ -11,7 +11,10 @@ namespace StarterAssets
 		
 		public Vector2 move;
 		public bool moveDisabled;
-		public Vector2 look;
+		public bool horizontal_move_disabled;
+        public Vector2 forced_move = Vector2.zero;
+		public bool force_sprint = false;
+        public Vector2 look;
 		public bool jump;
 		public bool jumpDisabled;
 		public bool sprint;
@@ -28,9 +31,14 @@ namespace StarterAssets
 		{
 			if(moveDisabled)
 				move = Vector2.zero;
+            else if (forced_move != Vector2.zero)
+                MoveInput(forced_move);
+            else if (horizontal_move_disabled)
+                MoveInput(new Vector2(0, value.Get<Vector2>().y));
 			else
-				MoveInput(value.Get<Vector2>());
+                MoveInput(value.Get<Vector2>());
 		}
+
         public bool isMoving()
 		{
             return move != Vector2.zero;
@@ -63,8 +71,8 @@ namespace StarterAssets
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{
-			move = newMoveDirection;
-		} 
+                move = newMoveDirection;
+        } 
 
 		public void LookInput(Vector2 newLookDirection)
 		{
@@ -78,8 +86,11 @@ namespace StarterAssets
 
 		public void SprintInput(bool newSprintState)
 		{
-			sprint = newSprintState;
-		}
+			if(force_sprint == false)
+				sprint = newSprintState;
+            else
+				sprint = force_sprint;
+        }
 		
 		private void OnApplicationFocus(bool hasFocus)
 		{

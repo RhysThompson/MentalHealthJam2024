@@ -44,25 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9645b05b5c0991546b7998723dfc85a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  QuestData:
-  - id: 0
-    name: 
-    description: 
-    IsComplete: 0
-    OnComplete:
-      m_PersistentCalls:
-        m_Calls: []
-    OnStart:
-      m_PersistentCalls:
-        m_Calls: []
+  Quests:
+  - name: Getting Ready
+    state: 0
     tasks:
-    - id: 0
-      name: 
-      description: 
-      IsComplete: 0
-      OnComplete:
-        m_PersistentCalls:
-          m_Calls: []
-      OnStart:
-        m_PersistentCalls:
-          m_Calls: []
+    - name: Get Shopping List
+      state: 0
+    - name: Get Keys
+      state: 0
+  QuestListeners: []

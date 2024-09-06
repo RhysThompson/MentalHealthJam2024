@@ -6,7 +6,7 @@ using FMODUnity;
 public class FootStepPlayer : MonoBehaviour
 {
     [SerializeField]
-    private string footstepEventPath;
+    private EventReference footstepEventPath;
 
     private FMOD.Studio.EventInstance footstepEvent;
 
@@ -15,6 +15,5 @@ public class FootStepPlayer : MonoBehaviour
         footstepEvent = RuntimeManager.CreateInstance(footstepEventPath);
         footstepEvent.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
         footstepEvent.start();
-        print("Step");
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9198888514600807278}
   - component: {fileID: 3008372748855578771}
   - component: {fileID: 8221955537143462331}
+  - component: {fileID: 7171350862612362404}
   m_Layer: 5
   m_Name: TaskHUD
   m_TagString: Untagged
@@ -80,7 +81,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: {fileID: 1700398546749722101}
   checkBoxAnimator: {fileID: 7096751205470174563}
-  task: {fileID: 0}
+  task:
+    name: 
+    state: 0
 --- !u!222 &8221955537143462331
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -89,6 +92,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 599230176967512749}
   m_CullTransparentMesh: 1
+--- !u!225 &7171350862612362404
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599230176967512749}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &2614144657260687685
 GameObject:
   m_ObjectHideFlags: 0

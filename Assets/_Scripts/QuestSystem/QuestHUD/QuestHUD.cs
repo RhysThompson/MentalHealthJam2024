@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
 public class QuestHUD : StaticInstance<QuestHUD>
 {
     public GameObject questHUDItemPrefab;
     public Dictionary<Quest, QuestHUDItem> questHUDItems = new Dictionary<Quest, QuestHUDItem>();
     public Transform toDoGroup;
-    private static float delayForCheckMark = 1.5f;
+    private float delayForCheckMark = 1.5f;
+    private float delayForFade = 1f;
     private void Start()
     {
         //questHUDListings = GetComponentsInChildren<QuestHUDItem>(true).ToList();
@@ -56,7 +58,9 @@ public class QuestHUD : StaticInstance<QuestHUD>
     {
         taskHUD.PlayCompleteAnimation();
         yield return new WaitForSeconds(delayForCheckMark);
-        CompleteQuestIfTasksAreDone(QuestTracker.Instance.GetQuestFromTask(taskHUD.task));
+        taskHUD.GetComponentInChildren<CanvasGroup>().DOFade(0, delayForFade).SetEase(Ease.InQuad);
+        yield return new WaitForSeconds(delayForFade);
+        StartCoroutine(CheckCompleteWait(QuestTracker.Instance.GetQuestFromTask(taskHUD.task)));
         if(taskHUD != null)
             Destroy(taskHUD.gameObject);
         UpdateQuestHUD();

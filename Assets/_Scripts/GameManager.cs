@@ -11,6 +11,7 @@ public enum GameState
     Paused = 1,
     Playing = 2,
     Talking = 3,
+    Minigame = 4,
 }
 /// <summary>
 /// Base for a Game Manager. Mainly features: State machine for switching between game states.
@@ -22,6 +23,7 @@ public class GameManager : StaticInstance<GameManager> {
     public static event Action<GameState> OnAfterStateChanged;
     public static GameState lastGameState = GameState.Starting;
     private StarterAssetsInputs playerInputs;
+    public List<string> keyItems = new List<string>();
     public GameState State { get; private set; }
     /// <summary>
     /// Stops all state changes from the first state to any of the listed states. OnBeforeStateChanged will not be called.
@@ -53,6 +55,9 @@ public class GameManager : StaticInstance<GameManager> {
                 break;
             case GameState.Playing:
                 EnableMovement();
+                break;
+            case GameState.Minigame:
+                StartMinigame();
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
@@ -91,6 +96,11 @@ public class GameManager : StaticInstance<GameManager> {
         Cursor.lockState = CursorLockMode.Locked;
         playerInputs.cursorLocked = true;
         playerInputs.cursorInputForLook = true;
+    }
+    public void StartMinigame()
+    {
+        DisableMovement();
+        // Do some setup for the minigame
     }
 }
 

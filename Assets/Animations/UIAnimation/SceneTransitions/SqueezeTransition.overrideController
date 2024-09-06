@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SqueezeTransition
+  m_Controller: {fileID: 9100000, guid: b98eb23e96a58964ea731d9c7c6be683, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 06e504bd83fccd54d9f8cb9959920617, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 71ddfc0a9834b9d41aec26e8c6d75556, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 688c4a59db62bb3408a27b749e0e6fae, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5f36bd9f20a446a4e9787561b87f460c, type: 2}

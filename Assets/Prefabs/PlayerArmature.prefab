@@ -1037,6 +1037,7 @@ GameObject:
   - component: {fileID: 5885216827943657505}
   - component: {fileID: 135756642000475821}
   - component: {fileID: 4416926081852918493}
+  - component: {fileID: 1849273143519143134}
   m_Layer: 8
   m_Name: PlayerArmature
   m_TagString: Player
@@ -1187,6 +1188,7 @@ MonoBehaviour:
   moveDisabled: 0
   look: {x: 0, y: 0}
   jump: 0
+  jumpDisabled: 0
   sprint: 0
   analogMovement: 0
   cursorLocked: 1
@@ -1290,6 +1292,25 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1849273143519143134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4416926081852918481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd08fa89a7daced479265b8678d624f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepEventPath:
+    Guid:
+      Data1: -289570606
+      Data2: 1323218881
+      Data3: -1563905107
+      Data4: 1947321340
+    Path: event:/SFX/Footstep
 --- !u!1 &4523139366846529165
 GameObject:
   m_ObjectHideFlags: 0
